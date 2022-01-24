@@ -19,7 +19,9 @@
             <h1>{{ record['site_url'] }}</h1>
         </div>
         {% if g.user['id'] == record['author_id'] %}
-        <a class="button" href="{{ url_for('blog.update', id=record['id']) }}">Edit</a>
+        <form action="{{ url_for('blog.delete', id=record['id']) }}" method="post">
+            <input class="button" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
         {% endif %}
     </header>
     <p>

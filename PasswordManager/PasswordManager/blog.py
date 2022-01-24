@@ -113,37 +113,6 @@ def get_record(id, check_author=True):
 
     return record
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
-@login_required
-def update(id):
-    record = get_record(id)
-
-    if request.method == 'POST':
-        site_url = request.form['site_url']
-        used_login = request.form['used_login']
-        used_email = request.form['used_email']
-        used_password = request.form['used_password']
-        error = None
-
-        if not site_url:
-            error = 'URL is required.'
-        if not used_password:
-            error = 'Password is required'
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                'UPDATE record SET site_url = ?, used_login = ?, used_email = ?, used_password = ?'
-                ' WHERE id = ?',
-                (site_url, used_login, used_email, used_password, id)
-            )
-            db.commit()
-            return redirect(url_for('blog.index'))
-
-    return render_template('blog/update.html', post=record)
-
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
