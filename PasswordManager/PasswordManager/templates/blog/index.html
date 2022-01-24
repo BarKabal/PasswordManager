@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<form action="{{ url_for('blog.check_master_password')}}" method="post">
+    <input type="password" name="master_password" id="master_password" />
+    <input type="submit" value="Save" class="button">
+</form>
+<h1>{% block title %}Saved login data{% endblock %}</h1>
+  {% if g.user %}
+<a class="action" href="{{ url_for('blog.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for record in records %}
+<article class="post">
+    <header>
+        <div>
+            <h1>{{ record['site_url'] }}</h1>
+        </div>
+        {% if g.user['id'] == record['author_id'] %}
+        <a class="button" href="{{ url_for('blog.update', id=record['id']) }}">Edit</a>
+        {% endif %}
+    </header>
+    <p>
+        Login: {{ record['used_login'] }}<br>
+        Email: {{ record['used_email'] }}<br>
+        {% if record['used_password'] is defined %}
+        Password: {{ passwords[loop.index0] }}
+        {% else %}
+        Password:
+        {% endif %}
+    </p>
+</article>
+    {% if not loop.last %}
+<hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

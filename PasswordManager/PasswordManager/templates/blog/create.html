@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}New Record{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <label for="master_password">Master Password</label>
+    <input name="master_password" id="master_password" value="{{ request.form['master_password'] }}" required>
+    <label for="site_url">Site URL</label>
+    <input name="site_url" id="site_url" value="{{ request.form['site_url'] }}" required>
+    <label for="login">Login</label>
+    <input name="used_login" id="used_login">{{ request.form['used_login'] }}
+    <label for="email">Email</label>
+    <input name="used_email" id="used_email">{{ request.form['used_email'] }}
+    <label for="password">Password</label>
+    <input name="used_password" id="used_password">{{ request.form['used_password'] }}
+    <input type="submit" value="Save" class="button">
+    <a href="{{url_for('blog.index')}}" class="button">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Edit{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <label for="site_url">Site URL</label>
+    <input name="site_url" id="site_url"
+           value="{{ request.form['site_url'] or post['site_url'] }}" required>
+    <label for="login">Login</label>
+    <input name="used_login" id="used_login"
+           value="{{ request.form['used_login'] or post['used_login'] }}">
+    <label for="email">Email</label>
+    <input name="used_email" id="used_email"
+           value="{{ request.form['used_email'] or post['used_email'] }}">
+    <label for="password">Password</label>
+    <input name="used_password" id="used_password"
+           value="{{ request.form['used_password'] or post['used_password'] }}">
+    <input class="button" type="submit" value="Save">
+</form>
+<hr>
+<form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+    <input class="button" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+</form>
+{% endblock %}
