@@ -7,7 +7,7 @@ from PasswordManager.auth import login_required
 from PasswordManager.db import get_db
 import PasswordManager.encryption as encrypt
 
-bp = Blueprint('blog', __name__)
+bp = Blueprint('manager', __name__)
 
 @bp.route('/')
 @login_required
@@ -19,7 +19,7 @@ def index():
         ' WHERE r.author_id = ?',
         (g.user['id'],)
     ).fetchall()
-    return render_template('blog/index.html', records=records)
+    return render_template('manager/index.html', records=records)
 
 
 @bp.route('/check_master_password', methods=['POST'])
@@ -52,7 +52,7 @@ def check_master_password():
             ' WHERE r.author_id = ?',
         (g.user['id'],)
     ).fetchall()
-    return render_template('blog/index.html', records=records, passwords=passwords, number=len(passwords))
+    return render_template('manager/index.html', records=records, passwords=passwords, number=len(passwords))
 
 #O$qvd386Q0FSZoK!
 
@@ -93,9 +93,9 @@ def create():
                 (site_url, used_login, used_email, used_password_encrypted, g.user['id'])
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('manager.index'))
 
-    return render_template('blog/create.html')
+    return render_template('manager/create.html')
 
 def get_record(id, check_author=True):
     record = get_db().execute(
@@ -120,4 +120,4 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM record WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('blog.index'))
+    return redirect(url_for('manager.index'))

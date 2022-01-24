@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 
+
 {% block header %}
-<form action="{{ url_for('blog.check_master_password')}}" method="post">
+<h1>{% block title %}Saved login data{% endblock %}</h1>
+  {% if g.user %}
+<a class="action" href="{{ url_for('manager.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block master %}
+<form action="{{ url_for('manager.check_master_password')}}" method="post">
+    <h1>Write master password here:</h1>
     <input type="password" name="master_password" id="master_password" />
     <input type="submit" value="Save" class="button">
 </form>
-<h1>{% block title %}Saved login data{% endblock %}</h1>
-  {% if g.user %}
-<a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -19,7 +24,7 @@
             <h1>{{ record['site_url'] }}</h1>
         </div>
         {% if g.user['id'] == record['author_id'] %}
-        <form action="{{ url_for('blog.delete', id=record['id']) }}" method="post">
+        <form action="{{ url_for('manager.delete', id=record['id']) }}" method="post">
             <input class="button" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
         </form>
         {% endif %}
