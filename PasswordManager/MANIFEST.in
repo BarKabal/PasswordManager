@@ -1,0 +1,4 @@
+include PasswordManager/schema.sql
+graft PasswordManager/static
+graft PasswordManager/templates
+global-exclude *.pyc
